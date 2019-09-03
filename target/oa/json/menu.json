@@ -1,0 +1,147 @@
+{
+	"status": 0,
+	"msg": "ok",
+	"data": [{
+			"id": 1,
+			"name": "组织机构管理",
+			"icon": "&#xe6b8;",
+			"url": "",
+			"children": [{
+				"id": 2,
+				"name": "部门管理",
+				"icon": "",
+				"url": "./pages/member/list.html"
+			}, {
+				"id": 3,
+				"name": "查询员工",
+				"icon": "",
+				"url": "./pages/member/del.html"
+			},{
+				"id": 4,
+				"name": "增加员工",
+				"icon": "",
+				"url": "./pages/member/del.html"
+			}
+			]
+		},
+		{
+			"id": 5,
+			"name": "邮件",
+			"icon": "&#xe705;",
+			"url": "",
+			"children": [{
+				"id": 6,
+				"name": "已发送",
+				"icon": "",
+				"url": "./pages/article/list.html"
+			}, {
+				"id": 7,
+				"name": "收件箱",
+				"icon": "",
+				"url": "./pages/article/category.html"
+			},{
+				"id": 8,
+				"name": "写邮件",
+				"icon": "",
+				"url": "./pages/article/list.html"
+			},{
+				"id": 9,
+				"name": "已删除",
+				"icon": "",
+				"url": "./pages/article/list.html"
+			},{
+				"id": 10,
+				"name": "草稿箱",
+				"icon": "",
+				"url": "./pages/article/list.html"
+			}
+			]
+		},
+		{
+			"id": 11,
+			"name": "公文收发",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 12,
+				"name": "公文审核",
+				"icon": "",
+				"url": "./pages/order/list.html"
+			},{
+				"id": 13,
+				"name": "公文列表",
+				"icon": "",
+				"url": "./pages/order/list.html"
+			},{
+				"id": 14,
+				"name": "公文草拟",
+				"icon": "",
+				"url": "./pages/order/list.html"
+			}]
+		},
+		{
+			"id": 15,
+			"name": "文档中心",
+			"icon": "&#xe726;",
+			"url": "",
+			"children": [{
+				"id": 16,
+				"name": "资料中心",
+				"icon": "",
+				"url": "./pages/admin/list.html"
+			},
+			{
+				"id": 17,
+				"name": "回收站",
+				"icon": "",
+				"url": "./pages/admin/role.html"
+			}]
+		},
+		{
+			"id": 18,
+			"name": "事务管理",
+			"icon": "&#xe6ce;",
+			"url": "",
+			"children": [
+				{
+					"id": 19,
+					"name": "日程管理",
+					"icon": "",
+					"url": "./pages/echarts/echarts1.html"
+				}
+			]
+		},
+		{
+			"id": 20,
+			"name": "个人设置",
+			"icon": "&#xe6b2",
+			"url": "",
+			"children": [
+				{
+					"id": 21,
+					"name": "个性设置",
+					"icon": "",
+					"url": "./pages/echarts/echarts1.html"
+				}
+			]
+		},{
+			"id": 22,
+			"name": "系统管理",
+			"icon": "&#xe6ce;",
+			"url": "",
+			"children": [
+				{
+					"id": 23,
+					"name": "角色管理",
+					"icon": "",
+					"url": "./pages/echarts/echarts1.html"
+				},{
+					"id": 24,
+					"name": "分配角色",
+					"icon": "",
+					"url": "./pages/echarts/echarts1.html"
+				}
+			]
+		}
+	]
+}
