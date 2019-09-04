@@ -57,12 +57,7 @@
                 tpwidget("show");</script>
             </div>
         </li>
-        <li>
-
-
-        </li>
     </ul>
-
 
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
