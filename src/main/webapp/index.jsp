@@ -28,7 +28,7 @@
 <!-- 顶部开始 -->
 <div class="container">
     <div class="logo">
-        <a href="./index.jsp">客户关系管理系统</a>
+        <a href="./index.jsp">OA办公自动化系统</a>
     </div>
     <div class="left_open">
         <!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
@@ -66,7 +66,9 @@
 
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;">[客户经理] 小明</a>
+            <a href="javascript:;">
+                <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+                [客户经理] 小明</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
