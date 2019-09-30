@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.EmployeeMapper">
+   <select id="selectEmp" resultType="map">
+     SELECT * FROM employee  WHERE emp_uname=#{name}
+   </select>
+
+    <select id="selexist" resultType="Integer">
+        SELECT COUNT(*) FROM employee WHERE dep_id=#{id}
+    </select>
+    <select id="showAll" resultType="map">
+        SELECT e.emp_id,e.emp_name,e.emp_geender ,e.emp_email,e.emp_uname,e.emp_pwd,es.sta_name,d.duty_name,dt.dep_name
+        FROM employee e JOIN employeestatus es ON e.sta_id=es.sta_id
+        JOIN duty d ON d.duty_id=e.duty_id
+        JOIN department dt ON dt.dep_id=e.dep_id  limit #{page},#{limit}
+    </select>
+    <select id="selTotal" resultType="Integer">
+        select count(*)  FROM employee e JOIN employeestatus es ON e.sta_id=es.sta_id
+        JOIN duty d ON d.duty_id=e.duty_id
+        JOIN department dt ON dt.dep_id=e.dep_id
+    </select>
+    <select id="selSex" resultType="map">
+        SELECT emp_geender FROM employee GROUP BY emp_geender
+    </select>
+    <select id="inquire" resultType="map" parameterType="map">
+        SELECT e.emp_id,e.emp_name,e.emp_geender ,e.emp_email,e.emp_uname,e.emp_pwd,es.sta_name,d.duty_name,dt.dep_name
+        FROM employee e JOIN employeestatus es ON e.sta_id=es.sta_id
+        JOIN duty d ON d.duty_id=e.duty_id
+        JOIN department dt ON dt.dep_id=e.dep_id
+        <where>
+            <if test="map.name!=null and map.name!='' ">
+                e.emp_name like '%${map.name}%'
+            </if>
+            <if test="map.depid!=null and map.depid!=''">
+                and  e.dep_id= #{map.depid}
+            </if>
+            <if test="map.geender!=null and map.geender!=''">
+                and  e.emp_geender= #{map.geender}
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+    <!--添加-->
+    <insert id="addEmp" parameterType="map" >
+        INSERT INTO employee VALUE(NULL,#{map.name},#{map.sex},#{map.email},#{map.uname},#{map.pwd},#{map.state},#{map.duty},#{map.depart},#{map.img},#{map.remark})
+    </insert>
+    <!--修改-->
+    <update id="updateEmp" parameterType="map">
+      UPDATE employee SET emp_name=#{map.name},emp_geender=#{map.sex},emp_email=#{map.email},emp_uname=#{map.uname},emp_pwd=#{map.pwd}, sta_id=#{map.state}
+      ,duty_id=#{map.duty},dep_id=#{map.depart},emp_photo=#{map.img},emp_remark=#{map.remark} WHERE emp_id=#{map.id}
+    </update>
+    <!--删除-->
+    <delete id="delByid" >
+        delete  from employee where emp_id=#{id}
+    </delete>
+    <!--根据主键查询信息-->
+    <select id="selByid" resultType="map">
+        select * from employee where emp_id=#{id}
+    </select>
+</mapper>

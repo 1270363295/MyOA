@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.HistoryMapper">
+
+    <!--添加-->
+    <insert id="addComment" parameterType="map">
+         insert  history  values(#{id},#{emp_id},#{time},#{content})
+    </insert>
+    <!--查询-->
+    <select id="selectHistoryById" parameterType="int" resultType="map">
+        SELECT h.id ,h.emp_id,e.emp_name,h.comment_time,h.comment
+FROM employee e  JOIN history h ON e.emp_id=h.emp_id  where h.id=#{id}
+    </select>
+
+</mapper>

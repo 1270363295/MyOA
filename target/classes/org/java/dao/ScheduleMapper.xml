@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.java.dao.ScheduleMapper">
+    <sql id="Base_Column_List">
+        s_id AS sId, id, title, begin_time AS beginTime, end_time AS endTime,emp_name AS emp_name,description
+    </sql>
+    
+    <select id="list" resultType="org.java.vo.ScheduleVO">
+	    select 
+	    	 <include refid="Base_Column_List" />
+	    from schedule
+	    where emp_name=#{emp_name}
+    </select>
+    
+    <insert id="insert" keyColumn="file_id" keyProperty="fileId" parameterType="org.java.entity.File" useGeneratedKeys="true">
+        insert into schedule (id, title,   begin_time,   end_time, description,emp_name)
+        values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+        #{beginTime}, #{endTime}, #{description,jdbcType=VARCHAR},#{emp_name,jdbcType=VARCHAR})
+    </insert>
+    
+    
+    <update id="updateByPrimaryKey" parameterType="org.java.entity.File">
+        update schedule
+        <set>
+            <if test="id != null and id !=''">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null and title !=''">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="beginTime != null">
+                begin_time = #{beginTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="description != null and description !=''">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where s_id = #{sId,jdbcType=INTEGER} and emp_name=#{emp_name}
+    </update>
+
+	<delete id="deleteByPrimaryKey">
+		delete from schedule where s_id=#{id,jdbcType=INTEGER} and emp_name=#{emp_name,jdbcType=VARCHAR}
+	</delete>
+
+</mapper>

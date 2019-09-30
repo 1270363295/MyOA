@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.Personal_SettingsMapper">
+
+
+    <update id="updPwd">
+        update employee set emp_pwd = #{param1,jdbcType=VARCHAR} where emp_name=#{param2,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updName">
+        update employee set emp_uname = #{param1,jdbcType=VARCHAR} where emp_name=#{param2,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

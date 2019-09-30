@@ -25,6 +25,8 @@
         <property name="password" value="${pwd}"/>
     </bean>
 
+
+
     <!-- 配置sqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -41,6 +43,7 @@
     <!-- 配置事务管理器  -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
+
     </bean>
 
 
@@ -51,6 +54,13 @@
             <tx:method name="ins*" propagation="REQUIRED"/>
             <tx:method name="del*" propagation="REQUIRED"/>
             <tx:method name="upd*" propagation="REQUIRED"/>
+            <tx:method name="upl*" propagation="REQUIRED"/>
+            <tx:method name="redu*" propagation="REQUIRED"/>
+            <tx:method name="restore*" propagation="REQUIRED"/>
+            <tx:method name="recycle*" propagation="REQUIRED"/>
+            <tx:method name="write*" propagation="REQUIRED"/>
+            <tx:method name="create*" propagation="REQUIRED"/>
+            <tx:method name="show*" propagation="REQUIRED"/>
             <tx:method name="*" read-only="true"/>
         </tx:attributes>
     </tx:advice>
@@ -69,6 +79,10 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+<!--     &lt;!&ndash;配置文件上传&ndash;&gt;-->
+<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+<!--        <property name="maxUploadSize" value="2097152"></property>-->
+<!--    </bean>-->
 
     <!-- 配置jackson可以直接返回对象 -->
     <mvc:annotation-driven/>

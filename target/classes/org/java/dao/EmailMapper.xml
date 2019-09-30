@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.java.dao.EmailMapper">
+  <resultMap id="BaseResultMap" type="org.java.entity.Email">
+    <!--@mbg.generated-->
+    <id column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="addresser" jdbcType="VARCHAR" property="addresser" />
+    <result column="recipients" jdbcType="VARCHAR" property="recipients" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="typeid" jdbcType="INTEGER" property="typeid" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="form" jdbcType="INTEGER" property="form" />
+    <result column="accessory_name" jdbcType="VARCHAR" property="accessory_name" />
+    <result column="accessory_url" jdbcType="VARCHAR" property="accessory_url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    eid, addresser, recipients, title, content, typeid, sendTime, form
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from email
+    where eid = #{eid,jdbcType=INTEGER}
+  </select>
+  <update id="updateByPrimaryKey" parameterType="org.java.entity.Email">
+    <!--@mbg.generated-->
+    update email
+    set addresser = #{addresser,jdbcType=VARCHAR},
+    recipients = #{recipients,jdbcType=VARCHAR},
+    title = #{title,jdbcType=VARCHAR},
+    content = #{content,jdbcType=VARCHAR},
+    typeid = #{typeid,jdbcType=INTEGER},
+    sendTime = #{sendtime,jdbcType=VARCHAR},
+    form = #{form,jdbcType=INTEGER}
+    where eid = #{eid,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from email
+    where eid = #{eid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="eid" keyProperty="eid" parameterType="org.java.entity.Email" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into email (addresser, recipients, title,
+    content, typeid, sendTime,
+    form)
+    values (#{addresser,jdbcType=VARCHAR}, #{recipients,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+    #{content,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, #{sendtime,jdbcType=TIMESTAMP},
+    #{form,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="eid" keyProperty="eid" parameterType="org.java.entity.Email" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into email
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addresser != null">
+        addresser,
+      </if>
+      <if test="recipients != null">
+        recipients,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="typeid != null">
+        typeid,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="form != null">
+        form,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addresser != null">
+        #{addresser,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null">
+        #{recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="form != null">
+        #{form,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.java.entity.Email">
+    <!--@mbg.generated-->
+    update email
+    <set>
+      <if test="addresser != null">
+        addresser = #{addresser,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null">
+        recipients = #{recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="form != null">
+        form = #{form,jdbcType=INTEGER},
+      </if>
+    </set>
+    where eid = #{eid,jdbcType=INTEGER}
+  </update>
+
+
+  <!--分页显示收件箱-->
+  <select id="showRecEmail" resultMap="BaseResultMap">
+    select e.eid,e.addresser,e.recipients,e.title,e.content,t.typeName,e.sendTime,e.form from email e
+    inner join type t on e.typeid = t.typeid
+    inner join employee em on em.emp_name = e.recipients
+    where recipients = #{name} and e.form = 1
+    limit #{page} , #{limit}
+  </select>
+
+  <!--分页显示发件箱-->
+  <select id="showSendEmail" resultMap="BaseResultMap">
+    select e.eid,e.addresser,e.recipients,e.title,e.content,t.typeName,e.sendTime,e.form from email e
+    inner join type t on e.typeid = t.typeid
+    inner join employee em on em.emp_name = e.addresser
+    where addresser = #{name} and e.form = 1
+    limit #{page} , #{limit}
+  </select>
+
+  <!--收件箱邮件个数-->
+  <select id="recEmailCount" resultType="int">
+    select count(*) from email e
+    inner join employee em on em.emp_name = e.recipients
+    where recipients = #{recipients} and form = 1
+  </select>
+
+  <!--发件箱邮件个数-->
+  <select id="sendEmailCount" resultType="int">
+    select count(*) from email e
+    inner join employee em on em.emp_name = e.addresser
+    where addresser = #{name} and form = 1
+  </select>
+
+  <!--删除邮件(实际为修改状态为2)-->
+    <update id="delEmail" parameterType="map">
+        update email
+        set form = 2
+        where eid=#{eid}
+    </update>
+
+    <!--显示邮件详情-->
+  <select id="showDetail" resultMap="BaseResultMap">
+    select e.addresser,e.recipients,e.title,e.content,t.typeName,e.sendTime,e.accessory_name from email e
+    inner join type t on e.typeid = t.typeid
+    where e.eid = #{eid} and e.form=1
+  </select>
+
+
+
+
+  <!--分页显示草稿箱-->
+  <select id="showDrafts" resultMap="BaseResultMap">
+    select e.eid,e.addresser,e.recipients,e.title,e.content,t.typeName,e.sendTime,e.form from email e
+    inner join type t on e.typeid = t.typeid
+    inner join employee em on em.emp_name = e.addresser
+    where addresser = #{name} and form = 0
+    limit #{page} , #{limit}
+  </select>
+
+  <!--草稿箱个数-->
+  <select id="draftsCount" resultType="int">
+    select count(*) from email e
+    inner join employee em on em.emp_name = e.addresser
+    where addresser = #{name} and form = 0
+  </select>
+
+  <!--修改邮件-->
+  <update id="updateEmail" parameterType="map">
+    update email
+    set
+    recipients = #{recipients,jdbcType=VARCHAR},
+    title = #{title,jdbcType=VARCHAR},
+    content = #{content,jdbcType=VARCHAR},
+    sendTime = now()
+    where eid = #{eid,jdbcType=INTEGER}
+  </update>
+
+  <!-- 显示编辑草稿 -->
+  <select id="showUpdateEmail" resultMap="BaseResultMap">
+    select e.eid,e.addresser,e.recipients,e.title,e.content,t.typeName,e.sendTime,e.form from email e
+    inner join type t on e.typeid = t.typeid
+    where eid=#{eid} and form = 0
+
+  </select>
+
+
+
+  <!-- 回收站分页显示 -->
+  <select id="queryAllEmails" resultMap="BaseResultMap">
+    select e.eid,e.recipients,e.title,e.sendTime,t.typeName
+    from email e
+    inner join type t on e.typeid=t.typeid
+    where form=3
+    limit #{page} , #{limit}
+  </select>
+
+  <!--回收站条数-->
+  <select id="queryEmailsCount" resultType="int">
+    select count(*) from email where form=3
+  </select>
+
+  <!--  回收站还原  -->
+  <update id="restoreEmails" parameterType="java.lang.Integer">
+    update email set form = 1 where eid=#{eid,jdbcType=INTEGER}
+  </update>
+
+  <!--  回收站删除  -->
+  <delete id="recycleBinDelEmail">
+    delete from email where eid=#{eid,jdbcType=INTEGER}
+  </delete>
+
+
+
+  <!--  不带附件发送邮件  -->
+    <insert id="insertEmail">
+      insert into email (addresser, recipients, title,
+      content, typeid, sendTime,
+      form)
+      values (#{name}, #{recipients,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, now(),1)
+    </insert>
+
+  <!--  新建邮件到草稿箱  -->
+  <insert id="insertDrafts">
+    insert into email (addresser, recipients, title,
+    content, typeid, sendTime,
+    form)
+    values (#{name}, #{recipients,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+    #{content,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, now(),0)
+  </insert>
+
+  <!--带附加发送邮件-->
+  <insert id="insertAccessory">
+    insert into email (addresser, recipients, title,
+    content, typeid, sendTime,
+    form,accessory_name,accessory_url)
+    values (#{name}, #{recipients,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+    #{content,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, now(),1,#{accessory_name,jdbcType=VARCHAR},
+    #{accessory_url,jdbcType=VARCHAR})
+  </insert>
+
+  <!--根据eid得到附件名和路径-->
+  <select id="findAccessory" resultType="org.java.entity.Email">
+    select accessory_name,accessory_url from email where eid=#{eid}
+  </select>
+
+
+</mapper>

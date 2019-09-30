@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.dao.DepartmentMapper">
+    <!--分页-->
+    <select id="showAll" resultType="map">
+        SELECT dep_id,dep_name,dep_phone,dep_fax FROM department limit #{page},#{limit}
+    </select>
+    <!--添加-->
+    <insert id="addDepart" parameterType="map" >
+        insert into department values(null,#{map.name},#{map.phone},#{map.fax})
+    </insert>
+    <!--查询总行数-->
+    <select id="selTotal" resultType="Integer">
+     SELECT COUNT(*) FROM department
+    </select>
+    <delete id="delByid">
+        delete from department where dep_id=#{id}
+    </delete>
+    <update id="updateDate" parameterType="map">
+      UPDATE department SET dep_name=#{map.name} ,dep_phone=#{map.phone},dep_fax=#{map.fax} WHERE dep_id=#{map.id}
+    </update>
+    <!--查询所有的部门名称-->
+    <select id="selDepartName" resultType="map">
+        SELECT dep_id,dep_name FROM department;
+    </select>
+</mapper>
